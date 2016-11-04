@@ -7,40 +7,48 @@ window.onload = function () {
   	console.log(secret_word); //testing secret word
 
   	var secret_word_dashed = secret_word.replace(/[a-zA-Z]/g, '-'); //substitutes each char of secret word to a dash
-  	console.log(secret_word_dashed);
+  	console.log(secret_word_dashed); //testing sw-dashed
 
 	document.querySelector(".secret-word-dashed").innerHTML = secret_word_dashed; //rewrites dashed secret word to webpage
 
- 	var stored_guesses = [];
+	var stored_guesses = [];
  	var guesses_remaining = 10;	//currently has no consequences, need to add a while loop that stops the game
 
- 	document.onkeyup = function(event) {
- 		var userGuess = String.fromCharCode(event.keyCode).toLowerCase(); //logs pressed key into userGuess
- 		console.log(userGuess);
- 		guesses_remaining--;
- 		console.log(guesses_remaining);
- 		
- 		stored_guesses.push(userGuess);	//pushes user's guess into stored guesses array
+ 	document.onkeyup = function(event) {	//once user presses a key
+ 		if (guesses_remaining > 0) {
+	 		var userGuess = String.fromCharCode(event.keyCode).toLowerCase(); //logs pressed key into userGuess
+	 		console.log(userGuess); //4testing purposes
+	 		guesses_remaining--;	//decrements # of guesses
+	 		document.querySelector(".remaining-guesses").innerHTML = guesses_remaining;
+	 		console.log(guesses_remaining); //4 testing purposes
+	 		stored_guesses.push(userGuess);	//pushes user's guess into stored guesses array
+	 		document.querySelector(".stored-letters").innerHTML = stored_guesses;
 
- 		for (var i = 0; i <secret_word_dashed.length; i++){
- 			if (secret_word[i] == userGuess) {
- 				console.log(stored_guesses + i);
+	
+	 		for (var i = 0; i <secret_word_dashed.length; i++){	//iterates through every char of secret word
+	 			if (secret_word[i] == userGuess) {	//checks if it matches guess
+	 			//	console.log(stored_guesses + i); //4 testing purposes
+	 				secret_word_dashed = secret_word_dashed.substring(0,i) + userGuess + secret_word_dashed.substring(i+1); //sets secret_word_dashed to incorporate your proper guessed words by diving into 2 substrings the
+	 				//substrings then concatenating them, since strings are immutable in JS riiiight?
+	 				document.querySelector(".secret-word-dashed").innerHTML = secret_word_dashed;
+	 			//	console.log(secret_word_dashed);	//4 testing purposes
+	 				if (secret_word === secret_word_dashed) {
+	 					alert("You won!! Hot diggity dog!!")
+	 					var play_again = confirm("Wanna play again?");
+	 					if (play_again ==true) {
+	 						location.reload();
+	 					}
+	 				}
 
- 				secret_word_dashed = secret_word_dashed.substring(0,i) + userGuess + secret_word_dashed.substring(i+1); //sets secret_word_dashed to incorporate your proper guessed words by diving into 2 substrings the
- 				//substrings then concatenating them, since strings are immutable in JS riiiight?
- 				console.log(secret_word_dashed);
-
- 				if (secret_word === secret_word_dashed) {
- 					console.log("you won!!!");
- 				}
-
- 				//Idk do i even need to do anything if they match?
- 		//prolly a better way		secret_word_dashed = secret_word.replace(/[^#{@stored_guesses}]/g, "-");
- 		//		console.log(secret_word_dashed + " here's thesecret word dashed");
- 			}
- 		}
-
-
-
- 	};
+				}
+	 		}
+	 	}
+	 	else {	//comes into play when guesses_remaining == 0
+	 		alert("You're all out of guesses! You lose.");
+			var play_again = confirm("Wanna play again?");
+			if (play_again ==true) {
+				location.reload();
+			}	 		
+	 	}
+ 	}
 }
