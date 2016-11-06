@@ -1,8 +1,13 @@
-body {
-	background-image: 
-}
 
+body {
+	background-color: #415B59;
+}
 .container img{ 
 	max-height: 90%;
 	max-width: 90%;
+}
+
+footer {
+	margin-top: 50px;
+	text-align: center;
 }

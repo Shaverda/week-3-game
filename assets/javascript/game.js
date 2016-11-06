@@ -1,16 +1,16 @@
 
-var word_options = ["brown", "green", "red", "yellow", "blue"]; 
-var secret_word = word_options[Math.floor(Math.random() * word_options.length)]; //chooses a random secret word from array
+var word_options = ["Aragorn", "Frodo", "Legolas", "Gandalf", "Bilbo", "Sam", "Gimli", "Galadriel", "Pippin", "Arwen", "Gollum", "Elrond", "Saruman", "Merry", "Boromir", "Faramir"]; 
+var secret_word = word_options[Math.floor(Math.random() * word_options.length)].toLowerCase(); //chooses a random secret word from array
 var secret_word_dashed = secret_word.replace(/[a-zA-Z]/g, '-'); //substitutes each char of secret word to a dash
 var stored_guesses = [];
 var guesses_remaining = 10;	
 var userGuess;
 
-function playAgain (){	//asks user if wants to play again; reloads if so
+function playAgain (){	//asks user if wants to play again; rresets/re-assigns all variables if so
 	var play_again = confirm("Wanna play again?");
 	if (play_again ==true) {
-		secret_word = word_options[Math.floor(Math.random() * word_options.length)];
-		secret_word_dashed = secret_word.replace(/[a-zA-Z]/g, '-');
+		secret_word = word_options[Math.floor(Math.random() * word_options.length)];	//resets
+		secret_word_dashed = secret_word.replace(/[a-zA-Z]/g, '-');	//rese
 		stored_guesses = [];
 		guesses_remaining = 10;	
 		document.querySelector(".secret-word-dashed").innerHTML = secret_word_dashed; //rewrites dashed secret word to webpage
@@ -48,6 +48,7 @@ window.onload = function gameplay() {
 	 	}
 	 	else {	//comes into play when guesses_remaining == 0
 	 		alert("You're all out of guesses! You lose.");	//i hope this is self explanatory.
+	 		alert("The correct character was " + secret_word);
 			if (playAgain() == true){	//calls play again function, if returns true, reruns gameplay function
 				gameplay();
 			}
